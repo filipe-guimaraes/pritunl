@@ -8,6 +8,7 @@ services:
     network_mode: bridge
     volumes:
       - ./db:/data/db
+    restart: always
 
   pritunl:
     image: goofball222/pritunl:latest
@@ -15,8 +16,8 @@ services:
     hostname: pritunl
     network_mode: bridge
     privileged: true
-    sysctls:
-      - net.ipv6.conf.all.disable_ipv6=0
+    #sysctls:
+    #  - net.ipv6.conf.all.disable_ipv6=0
     links:
       - mongo
     volumes:
@@ -24,8 +25,7 @@ services:
     ports:
       - 80:80
       - 443:443
-      - 1194:1194
-      - 1194:1194/udp
-      - 1195:1195/udp
+      - 5050-5099:5050-5099/udp
     environment:
       - TZ=UTC
+    restart: always
